@@ -1,0 +1,73 @@
+services:
+  ### --- RESOURCES --- ### 
+  cancellation-resource:
+    path: resources/cancellation
+
+  fake-rozie-resource:
+    path: resources/fake-rozie  
+
+  event-storage-resource:
+    path: resources/event-storage
+
+  ### --- SERVICES --- ###
+  fake-rozie-service:
+    path: services/fake-rozie
+    params:
+      ROZIE_EVENTS_TABLE_ID: ${fake-rozie-resource.RozieEventsTableID}
+      ROZIE_EVENTS_TABLE_ARN: ${fake-rozie-resource.RozieEventsTableArn}
+
+      ROZIE_EVENTS_QUEUE_URL: ${fake-rozie-resource.RozieEventsQueueID}
+      ROZIE_EVENTS_QUEUE_ARN: ${fake-rozie-resource.RozieEventsQueueArn}
+
+  cancellation-service:
+    path: services/cancellation
+    params:
+      CANCELLATIONS_TABLE_ID: ${cancellation-resource.CancellationsTableID}
+      CANCELLATIONS_TABLE_ARN: ${cancellation-resource.CancellationsTableArn}
+
+      ROZIE_EVENTS_QUEUE_URL: ${fake-rozie-resource.RozieEventsQueueID}
+      ROZIE_EVENTS_QUEUE_ARN: ${fake-rozie-resource.RozieEventsQueueArn}
+
+      STEP_FUNCTION_DLQ_URL: ${cancellation-resource.StepFunctionDLQID}
+      STEP_FUNCTION_DLQ_ARN: ${cancellation-resource.StepFunctionDLQArn}
+
+      CANCELLATION_FOLLOW_UP_QUEUE_URL: ${cancellation-resource.CancellationFollowUpQueueID}
+      CANCELLATION_FOLLOW_UP_QUEUE_ARN: ${cancellation-resource.CancellationFollowUpQueueArn}
+
+      EVENTS_TABLE_ID: ${event-storage-resource.EventsTableID}
+      EVENTS_TABLE_ARN: ${event-storage-resource.EventsTableArn}
+    
+  rebooking-generator-service:
+    path: services/rebooking-generator
+    params:
+      CANCELLATIONS_TABLE_ID: ${cancellation-resource.CancellationsTableID}
+      CANCELLATIONS_TABLE_ARN: ${cancellation-resource.CancellationsTableArn}
+
+      ROZIE_EVENTS_QUEUE_URL: ${fake-rozie-resource.RozieEventsQueueID}
+      ROZIE_EVENTS_QUEUE_ARN: ${fake-rozie-resource.RozieEventsQueueArn}
+
+      EVENTS_TABLE_ID: ${event-storage-resource.EventsTableID}
+      EVENTS_TABLE_ARN: ${event-storage-resource.EventsTableArn}
+
+  post-process-analyser-service:
+    path: services/post-process-analyser
+    params:
+      ROZIE_EVENTS_TABLE_ID: ${fake-rozie-resource.RozieEventsTableID}
+      ROZIE_EVENTS_TABLE_ARN: ${fake-rozie-resource.RozieEventsTableArn}
+
+      EVENTS_TABLE_ID: ${event-storage-resource.EventsTableID}
+      EVENTS_TABLE_ARN: ${event-storage-resource.EventsTableArn}
+
+  cancellation-generator-service:
+    path: services/cancellation-generator
+    params:
+      CANCELLATIONS_TABLE_ID: ${cancellation-resource.CancellationsTableID}
+      CANCELLATIONS_TABLE_ARN: ${cancellation-resource.CancellationsTableArn}
+
+      ROZIE_EVENTS_QUEUE_URL: ${fake-rozie-resource.RozieEventsQueueID}
+      ROZIE_EVENTS_QUEUE_ARN: ${fake-rozie-resource.RozieEventsQueueArn}
+
+      EVENTS_TABLE_ID: ${event-storage-resource.EventsTableID}
+      EVENTS_TABLE_ARN: ${event-storage-resource.EventsTableArn}
+
+      CANCELLATION_FOLLOW_UP_SFN_ARN: ${cancellation-service.CancellationFollowUpStepFunctionArn}

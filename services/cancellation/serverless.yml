@@ -1,0 +1,103 @@
+service: cancellation-service
+useDotEnv: true
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-step-functions
+  - serverless-iam-roles-per-function
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+  stage: ${opt:stage, env:AWS_STAGE, 'dev'}
+  region: ${opt:region, env:AWS_REGION, 'eu-central-1'}
+  stackName: ${self:service}-${self:provider.stage}
+
+stepFunctions:
+  stateMachines:
+    cancellationFollowUpStepFunction:
+      name: cancellationFollowUpStepFunction
+      definition:
+        Comment: "Cancellation Follow Up Step Function"
+        StartAt: DynamicWait
+        States:
+          DynamicWait:
+            Type: Wait
+            InputPath: $
+            OutputPath: $
+            TimestampPath: $.waitUntil
+            Next: ParallelProcess
+          
+          ParallelProcess:
+            Type: Map
+            ItemsPath: $.cancellationIDs
+            ItemSelector:
+              input.$: $$.Map.Item.Value
+            ItemProcessor:
+              ProcessorConfig:
+                Mode: INLINE
+              StartAt: FetchCancellation
+              States:
+                SendToDLQ:
+                  Type: Task
+                  Resource: arn:aws:states:::sqs:sendMessage
+                  Parameters:
+                    MessageBody.$: $
+                    QueueUrl: ${param:STEP_FUNCTION_DLQ_URL}
+                  End: true
+                FetchCancellation:
+                  Type: Task
+                  Resource: arn:aws:states:::dynamodb:getItem
+                  Parameters:
+                    TableName: ${param:CANCELLATIONS_TABLE_ID}
+                    Key: 
+                      cancellationID:
+                        S.$: $.input
+                  Catch:
+                    - ErrorEquals:
+                        - States.ALL
+                      Next: SendToDLQ
+                  Next: CancellationChoice
+                CancellationChoice:
+                  Type: Choice
+                  Choices:
+                    - Variable: $.Item
+                      IsPresent: true
+                      Next: SendCancellationFollowUp
+                  Default: SkipFollowUp
+                SkipFollowUp:
+                  Type: Pass
+                  End: true
+                SendCancellationFollowUp:
+                  Type: Task
+                  Resource: arn:aws:states:::sqs:sendMessage
+                  InputPath: $.Item
+                  Parameters:
+                    MessageBody.$: $
+                    QueueUrl: ${param:CANCELLATION_FOLLOW_UP_QUEUE_URL}
+                  End: true
+            End: true
+
+functions:
+  cancellationFollowUpAdapter:
+    handler: src/cancellation-follow-up-adapter.handler
+    environment:
+      ROZIE_EVENTS_QUEUE_URL: ${param:ROZIE_EVENTS_QUEUE_URL}
+    logging: true
+    events: ${param:CANCELLATION_FOLLOW_UP_QUEUE_URL}
+    iamRoleStatementsName: cancellation-follow-up-adapter-${self:provider.stage}-iam-role
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - sqs:SendMessage
+        Resource: ${param:ROZIE_EVENTS_QUEUE_ARN}
+
+resources:
+  - Outputs:
+      CancellationFollowUpStepFunctionArn:
+        Value: !Ref CancellationFollowUpStepFunction
+
+      CFStack:
+        Value: ${self:provider.stackName}

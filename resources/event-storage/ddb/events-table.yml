@@ -1,0 +1,39 @@
+Resources:
+  EventsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: EventsTable${self:provider.stage}
+      BillingMode: PAY_PER_REQUEST
+
+      AttributeDefinitions:
+        - AttributeName: eventID
+          AttributeType: S
+        - AttributeName: flightID
+          AttributeType: S
+        - AttributeName: eventTime
+          AttributeType: S
+        - AttributeName: eventType
+          AttributeType: S
+
+      KeySchema:
+        - AttributeName: eventID
+          KeyType: HASH
+
+      GlobalSecondaryIndexes:
+        - IndexName: byFlightID
+          KeySchema:
+            - AttributeName: flightID
+              KeyType: HASH
+            - AttributeName: eventTime
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: byEventType
+          KeySchema:
+            - AttributeName: eventType
+              KeyType: HASH
+            - AttributeName: eventTime
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      

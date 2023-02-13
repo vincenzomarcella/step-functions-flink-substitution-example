@@ -1,0 +1,26 @@
+service: event-storage
+useDotEnv: true
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+  stage: ${opt:stage, env:AWS_STAGE, 'dev'}
+  region: ${opt:region, env:AWS_REGION, 'eu-central-1'}
+  stackName: ${self:service}-${self:provider.stage}
+
+resources:
+  - ${file(ddb/events-table.yml)}
+
+  - Outputs:
+      EventsTableID:
+        Value: !Ref EventsTable
+      EventsTableArn:
+        Value: !GetAtt EventsTable.Arn
+
+      CFStack:
+        Value: ${self:provider.stackName}
+
+

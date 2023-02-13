@@ -1,0 +1,38 @@
+service: cancellation-resources
+useDotEnv: true
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+  stage: ${opt:stage, env:AWS_STAGE, 'dev'}
+  region: ${opt:region, env:AWS_REGION, 'eu-central-1'}
+  stackName: ${self:service}-${self:provider.stage}
+
+resources:
+  - ${file(ddb/cancellations-table.yml)}
+  
+  - ${file(sqs/step-function-dlq.yml)}
+  - ${file(sqs/cancellation-follow-up-queue.yml)}
+
+  - Outputs:
+      CancellationsTableID:
+        Value: !Ref CancellationsTable
+      CancellationsTableArn:
+        Value: !GetAtt CancellationsTable.Arn
+
+      StepFunctionDLQID:
+        Value: !Ref StepFunctionDLQ
+      StepFunctionDLQArn:
+        Value: !GetAtt StepFunctionDLQ.Arn
+      CancellationFollowUpQueueID:
+        Value: !Ref CancellationFollowUpQueue
+      CancellationFollowUpQueueArn:
+        Value: !GetAtt CancellationFollowUpQueue.Arn
+
+      CFStack:
+        Value: ${self:provider.stackName}
+
+

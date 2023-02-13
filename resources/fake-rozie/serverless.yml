@@ -1,0 +1,33 @@
+service: fake-rozie-resource
+useDotEnv: true
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+  stage: ${opt:stage, env:AWS_STAGE, 'dev'}
+  region: ${opt:region, env:AWS_REGION, 'eu-central-1'}
+  stackName: ${self:service}-${self:provider.stage}
+
+resources:
+  - ${file(ddb/rozie-events-table.yml)}
+
+  - ${file(sqs/rozie-events-queue.yml)}
+
+  - Outputs:
+      RozieEventsTableID:
+        Value: !Ref RozieEventsTable
+      RozieEventsTableArn:
+        Value: !GetAtt RozieEventsTable.Arn
+
+      RozieEventsQueueID:
+        Value: !Ref RozieEventsQueue
+      RozieEventsQueueArn:
+        Value: !GetAtt RozieEventsQueue.Arn
+
+      CFStack:
+        Value: ${self:provider.stackName}
+
+

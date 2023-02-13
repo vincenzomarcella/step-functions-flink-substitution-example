@@ -1,0 +1,30 @@
+service: fake-rozie-service
+useDotEnv: true
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-iam-roles-per-function
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+  stage: ${opt:stage, env:AWS_STAGE, 'dev'}
+  region: ${opt:region, env:AWS_REGION, 'eu-central-1'}
+  stackName: ${self:service}-${self:provider.stage}
+
+
+functions:
+  persistRozieEvent:
+    handler: src/persist-rozie-event.handler
+    environment:
+      ROZIE_EVENTS_TABLE_ID: ${param:ROZIE_EVENTS_TABLE_ID}
+    events:
+      - sqs: ${param:ROZIE_EVENTS_QUEUE_ARN}
+    logging: true
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - dynamodb:PutItem
+        Resource: ${param:ROZIE_EVENTS_TABLE_ARN}

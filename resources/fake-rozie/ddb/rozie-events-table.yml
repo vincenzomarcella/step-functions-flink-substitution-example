@@ -1,0 +1,50 @@
+Resources:
+  RozieEventsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: RozieEventsTable${self:provider.stage}
+      BillingMode: PAY_PER_REQUEST
+
+      AttributeDefinitions:
+        - AttributeName: rozieEventID
+          AttributeType: S
+        - AttributeName: flightID
+          AttributeType: S
+        - AttributeName: passengerID
+          AttributeType: S
+        - AttributeName: rozieEventTime
+          AttributeType: S
+        - AttributeName: rozieEventType
+          AttributeType: S
+
+      KeySchema:
+        - AttributeName: rozieEventID
+          KeyType: HASH
+
+      GlobalSecondaryIndexes:
+        - IndexName: byFlightID
+          KeySchema:
+            - AttributeName: flightID
+              KeyType: HASH
+            - AttributeName: rozieEventTime
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: byPassengerID
+          KeySchema:
+            - AttributeName: passengerID
+              KeyType: HASH
+            - AttributeName: rozieEventTime
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: byEventType
+          KeySchema:
+            - AttributeName: rozieEventType
+              KeyType: HASH
+            - AttributeName: rozieEventTime
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+            
+      

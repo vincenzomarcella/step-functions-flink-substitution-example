@@ -1,0 +1,6 @@
+Resources:
+  RozieEventsQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: ${self:provider.stackName}-RozieEventsQueue.fifo
+      FifoQueue: true

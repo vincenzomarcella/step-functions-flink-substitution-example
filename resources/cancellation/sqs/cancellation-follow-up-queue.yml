@@ -1,0 +1,3 @@
+Resources:
+  CancellationFollowUpQueue:
+    Type: AWS::SQS::Queue

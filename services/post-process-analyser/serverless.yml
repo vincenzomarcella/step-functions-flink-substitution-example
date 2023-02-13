@@ -1,0 +1,36 @@
+service: post-process-analyser
+useDotEnv: true
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-step-functions
+  - serverless-iam-roles-per-function
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+  stage: ${opt:stage, env:AWS_STAGE, 'dev'}
+  region: ${opt:region, env:AWS_REGION, 'eu-central-1'}
+  stackName: ${self:service}-${self:provider.stage}
+
+functions:
+  post-process-analyser:
+    handler: src/post-process-analyser.handler
+    environment:
+      ROZIE_EVENTS_TABLE_ID: ${param:ROZIE_EVENTS_TABLE_ID}
+      EVENTS_TABLE_ID: ${param:EVENTS_TABLE_ID}
+    events:
+      - schedule: cron(7/10 * ? * * *)
+    logging: true
+    timeout: 900
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - dynamodb:Query
+        Resource: ${param:ROZIE_EVENTS_TABLE_ARN}/index/byEventType
+      - Effect: "Allow"
+        Action:
+          - dynamodb:Query
+        Resource: ${param:EVENTS_TABLE_ARN}/index/byEventType

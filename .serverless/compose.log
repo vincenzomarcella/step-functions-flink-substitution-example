@@ -1,0 +1,104 @@
+
+Removing stage dev
+cancellation-resource › waiting
+fake-rozie-resource › waiting
+event-storage-resource › waiting
+fake-rozie-service › waiting
+cancellation-service › waiting
+rebooking-generator-service › waiting
+post-process-analyser-service › waiting
+cancellation-generator-service › waiting
+fake-rozie-service › removing
+rebooking-generator-service › removing
+post-process-analyser-service › removing
+cancellation-generator-service › removing
+fake-rozie-service › Running "serverless remove --stage dev --param ROZIE_EVENTS_TABLE_ID=RozieEventsTabledev --param ROZIE_EVENTS_TABLE_ARN=arn:aws:dynamodb:eu-central-1:428932666862:table/RozieEventsTabledev --param ROZIE_EVENTS_QUEUE_URL=https://sqs.eu-central-1.amazonaws.com/428932666862/fake-rozie-resource-dev-RozieEventsQueue.fifo --param ROZIE_EVENTS_QUEUE_ARN=arn:aws:sqs:eu-central-1:428932666862:fake-rozie-resource-dev-RozieEventsQueue.fifo"
+rebooking-generator-service › Running "serverless remove --stage dev --param CANCELLATIONS_TABLE_ID=CancellationsTabledev --param CANCELLATIONS_TABLE_ARN=arn:aws:dynamodb:eu-central-1:428932666862:table/CancellationsTabledev --param ROZIE_EVENTS_QUEUE_URL=https://sqs.eu-central-1.amazonaws.com/428932666862/fake-rozie-resource-dev-RozieEventsQueue.fifo --param ROZIE_EVENTS_QUEUE_ARN=arn:aws:sqs:eu-central-1:428932666862:fake-rozie-resource-dev-RozieEventsQueue.fifo --param EVENTS_TABLE_ID=EventsTabledev --param EVENTS_TABLE_ARN=arn:aws:dynamodb:eu-central-1:428932666862:table/EventsTabledev"
+post-process-analyser-service › Running "serverless remove --stage dev --param ROZIE_EVENTS_TABLE_ID=RozieEventsTabledev --param ROZIE_EVENTS_TABLE_ARN=arn:aws:dynamodb:eu-central-1:428932666862:table/RozieEventsTabledev --param EVENTS_TABLE_ID=EventsTabledev --param EVENTS_TABLE_ARN=arn:aws:dynamodb:eu-central-1:428932666862:table/EventsTabledev"
+cancellation-generator-service › Running "serverless remove --stage dev --param CANCELLATIONS_TABLE_ID=CancellationsTabledev --param CANCELLATIONS_TABLE_ARN=arn:aws:dynamodb:eu-central-1:428932666862:table/CancellationsTabledev --param ROZIE_EVENTS_QUEUE_URL=https://sqs.eu-central-1.amazonaws.com/428932666862/fake-rozie-resource-dev-RozieEventsQueue.fifo --param ROZIE_EVENTS_QUEUE_ARN=arn:aws:sqs:eu-central-1:428932666862:fake-rozie-resource-dev-RozieEventsQueue.fifo --param EVENTS_TABLE_ID=EventsTabledev --param EVENTS_TABLE_ARN=arn:aws:dynamodb:eu-central-1:428932666862:table/EventsTabledev --param CANCELLATION_FOLLOW_UP_SFN_ARN=arn:aws:states:eu-central-1:428932666862:stateMachine:cancellationFollowUpStepFunction"
+fake-rozie-service › Running "serverless" from node_modules
+rebooking-generator-service › Running "serverless" from node_modules
+post-process-analyser-service › Running "serverless" from node_modules
+cancellation-generator-service › Running "serverless" from node_modules
+fake-rozie-service › Warning: Invalid configuration encountered
+fake-rozie-service ›   at root: unrecognized property 'useDotEnv'
+fake-rozie-service ›   at 'functions.persistRozieEvent': unrecognized property 'logging'
+fake-rozie-service › 
+fake-rozie-service › Learn more about configuration validation here: http://slss.io/configuration-validation
+fake-rozie-service › Removing fake-rozie-service from stage dev (eu-central-1)
+cancellation-generator-service › Warning: Invalid configuration encountered
+cancellation-generator-service ›   at root: unrecognized property 'useDotEnv'
+cancellation-generator-service ›   at 'functions.cancellation-generator': unrecognized property 'logging'
+cancellation-generator-service › 
+cancellation-generator-service › Learn more about configuration validation here: http://slss.io/configuration-validation
+cancellation-generator-service › Removing cancellation-generator-service from stage dev (eu-central-1)
+post-process-analyser-service › Warning: Invalid configuration encountered
+post-process-analyser-service ›   at root: unrecognized property 'useDotEnv'
+post-process-analyser-service ›   at 'functions.post-process-analyser': unrecognized property 'logging'
+post-process-analyser-service › 
+post-process-analyser-service › Learn more about configuration validation here: http://slss.io/configuration-validation
+post-process-analyser-service › Removing post-process-analyser from stage dev (eu-central-1)
+rebooking-generator-service › Warning: Invalid configuration encountered
+rebooking-generator-service ›   at root: unrecognized property 'useDotEnv'
+rebooking-generator-service ›   at 'functions.rebooking-generator': unrecognized property 'logging'
+rebooking-generator-service › 
+rebooking-generator-service › Learn more about configuration validation here: http://slss.io/configuration-validation
+rebooking-generator-service › Removing rebooking-generator from stage dev (eu-central-1)
+fake-rozie-service › ✔ Service fake-rozie-service has been successfully removed (47s)
+fake-rozie-service › 1 deprecation found: run 'serverless doctor' for more details
+fake-rozie-service › removed
+post-process-analyser-service › ✔ Service post-process-analyser has been successfully removed (88s)
+post-process-analyser-service › 1 deprecation found: run 'serverless doctor' for more details
+post-process-analyser-service › removed
+cancellation-generator-service › ✔ Service cancellation-generator-service has been successfully removed (88s)
+cancellation-generator-service › 1 deprecation found: run 'serverless doctor' for more details
+cancellation-generator-service › removed
+rebooking-generator-service › ✔ Service rebooking-generator has been successfully removed (89s)
+rebooking-generator-service › 1 deprecation found: run 'serverless doctor' for more details
+rebooking-generator-service › removed
+cancellation-service › removing
+cancellation-service › Running "serverless remove --stage dev --param CANCELLATIONS_TABLE_ID=CancellationsTabledev --param CANCELLATIONS_TABLE_ARN=arn:aws:dynamodb:eu-central-1:428932666862:table/CancellationsTabledev --param ROZIE_EVENTS_QUEUE_URL=https://sqs.eu-central-1.amazonaws.com/428932666862/fake-rozie-resource-dev-RozieEventsQueue.fifo --param ROZIE_EVENTS_QUEUE_ARN=arn:aws:sqs:eu-central-1:428932666862:fake-rozie-resource-dev-RozieEventsQueue.fifo --param STEP_FUNCTION_DLQ_URL=https://sqs.eu-central-1.amazonaws.com/428932666862/cancellation-resources-dev-StepFunctionDLQ-nJwfwcPAVJDF --param STEP_FUNCTION_DLQ_ARN=arn:aws:sqs:eu-central-1:428932666862:cancellation-resources-dev-StepFunctionDLQ-nJwfwcPAVJDF --param CANCELLATION_FOLLOW_UP_QUEUE_URL=https://sqs.eu-central-1.amazonaws.com/428932666862/cancellation-resources-dev-CancellationFollowUpQueue-Pu0K0atBO8wp --param CANCELLATION_FOLLOW_UP_QUEUE_ARN=arn:aws:sqs:eu-central-1:428932666862:cancellation-resources-dev-CancellationFollowUpQueue-Pu0K0atBO8wp --param EVENTS_TABLE_ID=EventsTabledev --param EVENTS_TABLE_ARN=arn:aws:dynamodb:eu-central-1:428932666862:table/EventsTabledev"
+cancellation-service › Running "serverless" from node_modules
+cancellation-service › Warning: Invalid configuration encountered
+cancellation-service ›   at root: unrecognized property 'useDotEnv'
+cancellation-service ›   at 'functions.cancellationFollowUpAdapter': unrecognized property 'logging'
+cancellation-service ›   at 'functions.cancellationFollowUpAdapter.events.0': must be object
+cancellation-service › 
+cancellation-service › Learn more about configuration validation here: http://slss.io/configuration-validation
+cancellation-service › Removing cancellation-service from stage dev (eu-central-1)
+cancellation-service › ✔ Service cancellation-service has been successfully removed (78s)
+cancellation-service › 1 deprecation found: run 'serverless doctor' for more details
+cancellation-service › removed
+cancellation-resource › removing
+fake-rozie-resource › removing
+event-storage-resource › removing
+cancellation-resource › Running "serverless remove --stage dev"
+fake-rozie-resource › Running "serverless remove --stage dev"
+event-storage-resource › Running "serverless remove --stage dev"
+fake-rozie-resource › Running "serverless" from node_modules
+cancellation-resource › Running "serverless" from node_modules
+event-storage-resource › Running "serverless" from node_modules
+cancellation-resource › Warning: Invalid configuration encountered
+cancellation-resource ›   at root: unrecognized property 'useDotEnv'
+cancellation-resource › 
+cancellation-resource › Learn more about configuration validation here: http://slss.io/configuration-validation
+cancellation-resource › Removing cancellation-resources from stage dev (eu-central-1)
+event-storage-resource › Warning: Invalid configuration encountered
+event-storage-resource ›   at root: unrecognized property 'useDotEnv'
+event-storage-resource › 
+event-storage-resource › Learn more about configuration validation here: http://slss.io/configuration-validation
+fake-rozie-resource › Warning: Invalid configuration encountered
+fake-rozie-resource ›   at root: unrecognized property 'useDotEnv'
+fake-rozie-resource › 
+fake-rozie-resource › Learn more about configuration validation here: http://slss.io/configuration-validation
+event-storage-resource › Removing event-storage from stage dev (eu-central-1)
+fake-rozie-resource › Removing fake-rozie-resource from stage dev (eu-central-1)
+event-storage-resource › ✔ Service event-storage has been successfully removed (16s)
+event-storage-resource › 1 deprecation found: run 'serverless doctor' for more details
+event-storage-resource › removed
+fake-rozie-resource › ✔ Service fake-rozie-resource has been successfully removed (67s)
+fake-rozie-resource › 1 deprecation found: run 'serverless doctor' for more details
+fake-rozie-resource › removed
+cancellation-resource › ✔ Service cancellation-resources has been successfully removed (67s)
+cancellation-resource › 1 deprecation found: run 'serverless doctor' for more details
+cancellation-resource › removed

@@ -1,0 +1,43 @@
+Resources:
+  CancellationsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: CancellationsTable${self:provider.stage}
+      BillingMode: PAY_PER_REQUEST
+
+      AttributeDefinitions:
+        - AttributeName: cancellationID
+          AttributeType: S
+        - AttributeName: flightID
+          AttributeType: S
+        - AttributeName: passengerID
+          AttributeType: S
+        - AttributeName: cancellationTime
+          AttributeType: S
+
+      KeySchema:
+        - AttributeName: cancellationID
+          KeyType: HASH
+
+      GlobalSecondaryIndexes:
+        - IndexName: byFlightID
+          KeySchema:
+            - AttributeName: flightID
+              KeyType: HASH
+            - AttributeName: cancellationTime
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: byPassengerID
+          KeySchema:
+            - AttributeName: passengerID
+              KeyType: HASH
+            - AttributeName: cancellationTime
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+      

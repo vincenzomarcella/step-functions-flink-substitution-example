@@ -1,0 +1,46 @@
+service: cancellation-generator-service
+useDotEnv: true
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-step-functions
+  - serverless-iam-roles-per-function
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+  stage: ${opt:stage, env:AWS_STAGE, 'dev'}
+  region: ${opt:region, env:AWS_REGION, 'eu-central-1'}
+  stackName: ${self:service}-${self:provider.stage}
+
+functions:
+  cancellation-generator:
+    handler: src/cancellation-generator.handler
+    environment:
+      CANCELLATIONS_TABLE_ID: ${param:CANCELLATIONS_TABLE_ID}
+      ROZIE_EVENTS_QUEUE_URL: ${param:ROZIE_EVENTS_QUEUE_URL}
+      CANCELLATION_FOLLOW_UP_SFN_ARN: ${param:CANCELLATION_FOLLOW_UP_SFN_ARN}
+      EVENTS_TABLE_ID: ${param:EVENTS_TABLE_ID}
+    logging: true
+    events:
+      - schedule: cron(0/10 * ? * * *)
+    iamRoleStatementsName: cancellation-generator-${self:provider.stage}-iam-role
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - dynamodb:PutItem
+        Resource: ${param:CANCELLATIONS_TABLE_ARN}
+      - Effect: "Allow"
+        Action:
+          - sqs:SendMessage
+        Resource: ${param:ROZIE_EVENTS_QUEUE_ARN}
+      - Effect: "Allow"
+        Action:
+          - dynamodb:PutItem
+        Resource: ${param:EVENTS_TABLE_ARN}
+      - Effect: "Allow"
+        Action:
+          - states:StartExecution
+        Resource: ${param:CANCELLATION_FOLLOW_UP_SFN_ARN}

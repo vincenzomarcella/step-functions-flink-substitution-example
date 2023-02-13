@@ -1,0 +1,3 @@
+Resources:
+  StepFunctionDLQ:
+    Type: AWS::SQS::Queue
