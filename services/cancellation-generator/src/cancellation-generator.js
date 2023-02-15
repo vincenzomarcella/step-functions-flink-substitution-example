@@ -35,8 +35,6 @@ module.exports.handler = async (event) => {
     const sqsparams = {
       MessageBody: JSON.stringify(cancellation),
       QueueUrl: ROZIE_EVENTS_QUEUE_URL,
-      MessageGroupId: "flightdelete",
-      MessageDeduplicationId: passengerID
     }
     await sqs.sendMessage(sqsparams).promise()
   }

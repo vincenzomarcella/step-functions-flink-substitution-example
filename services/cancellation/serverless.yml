@@ -86,7 +86,8 @@ functions:
     environment:
       ROZIE_EVENTS_QUEUE_URL: ${param:ROZIE_EVENTS_QUEUE_URL}
     logging: true
-    events: ${param:CANCELLATION_FOLLOW_UP_QUEUE_URL}
+    events: 
+      - sqs: ${param:CANCELLATION_FOLLOW_UP_QUEUE_ARN}
     iamRoleStatementsName: cancellation-follow-up-adapter-${self:provider.stage}-iam-role
     iamRoleStatements:
       - Effect: "Allow"

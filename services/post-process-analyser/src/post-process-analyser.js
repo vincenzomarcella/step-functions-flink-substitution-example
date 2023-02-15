@@ -35,7 +35,6 @@ const fetchCancellationEvents = async (flightID, nextToken = undefined) => {
         FilterExpression: "flightID = :flightID",
         ScanIndexForward: false,
         TableName: ROZIE_EVENTS_TABLE_ID,
-        Limit: 1
     }
     if(nextToken) {
         ddbparams["ExclusiveStartKey"] = nextToken
@@ -61,7 +60,6 @@ const fetchRebookingEvents = async (flightID, nextToken = undefined) => {
         FilterExpression: "flightID = :flightID",
         ScanIndexForward: false,
         TableName: ROZIE_EVENTS_TABLE_ID,
-        Limit: 1
     }
     if(nextToken) {
         ddbparams["ExclusiveStartKey"] = nextToken
@@ -87,7 +85,6 @@ const fetchCancellationFollowUpEvents = async (flightID, nextToken = undefined) 
         FilterExpression: "flightID = :flightID",
         ScanIndexForward: false,
         TableName: ROZIE_EVENTS_TABLE_ID,
-        Limit: 1
     }
     if(nextToken) {
         ddbparams["ExclusiveStartKey"] = nextToken

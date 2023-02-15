@@ -1,0 +1,93 @@
+{
+  "service": {
+    "id": "t4ykyp4"
+  },
+  "components": {
+    "fake-rozie-resource": {
+      "state": {
+        "detectedFrameworkVersion": "3.27.0"
+      },
+      "outputs": {
+        "RozieEventsTableID": "RozieEventsTabledev",
+        "RozieEventsQueueArn": "arn:aws:sqs:eu-central-1:428932666862:fake-rozie-resource-dev-RozieEventsQueue-Eib0qfgM8fod",
+        "RozieEventsTableArn": "arn:aws:dynamodb:eu-central-1:428932666862:table/RozieEventsTabledev",
+        "RozieEventsQueueID": "https://sqs.eu-central-1.amazonaws.com/428932666862/fake-rozie-resource-dev-RozieEventsQueue-Eib0qfgM8fod",
+        "CFStack": "fake-rozie-resource-dev",
+        "ServerlessDeploymentBucketName": "fake-rozie-resource-dev-serverlessdeploymentbucke-1oxcxhxa7091e"
+      }
+    },
+    "cancellation-resource": {
+      "state": {
+        "detectedFrameworkVersion": "3.27.0"
+      },
+      "outputs": {
+        "CancellationsTableID": "CancellationsTabledev",
+        "CancellationFollowUpQueueArn": "arn:aws:sqs:eu-central-1:428932666862:cancellation-resources-dev-CancellationFollowUpQueue-3TJLxMd6iR53",
+        "CFStack": "cancellation-resources-dev",
+        "StepFunctionDLQArn": "arn:aws:sqs:eu-central-1:428932666862:cancellation-resources-dev-StepFunctionDLQ-3SOEnfV5RfZG",
+        "CancellationFollowUpQueueID": "https://sqs.eu-central-1.amazonaws.com/428932666862/cancellation-resources-dev-CancellationFollowUpQueue-3TJLxMd6iR53",
+        "StepFunctionDLQID": "https://sqs.eu-central-1.amazonaws.com/428932666862/cancellation-resources-dev-StepFunctionDLQ-3SOEnfV5RfZG",
+        "ServerlessDeploymentBucketName": "cancellation-resources-d-serverlessdeploymentbuck-iizkd2c4qjnz",
+        "CancellationsTableArn": "arn:aws:dynamodb:eu-central-1:428932666862:table/CancellationsTabledev"
+      }
+    },
+    "event-storage-resource": {
+      "state": {
+        "detectedFrameworkVersion": "3.27.0"
+      },
+      "outputs": {
+        "CFStack": "event-storage-dev",
+        "EventsTableID": "EventsTabledev",
+        "ServerlessDeploymentBucketName": "event-storage-dev-serverlessdeploymentbucket-1u0kh61wsdz76",
+        "EventsTableArn": "arn:aws:dynamodb:eu-central-1:428932666862:table/EventsTabledev"
+      }
+    },
+    "post-process-analyser-service": {
+      "state": {
+        "detectedFrameworkVersion": "3.27.0"
+      },
+      "outputs": {
+        "PostDashprocessDashanalyserLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:428932666862:function:post-process-analyser-dev-post-process-analyser:46",
+        "ServerlessDeploymentBucketName": "post-process-analyser-de-serverlessdeploymentbuck-1hth7ps4v1ytr"
+      }
+    },
+    "cancellation-service": {
+      "state": {
+        "detectedFrameworkVersion": "3.27.0"
+      },
+      "outputs": {
+        "CancellationFollowUpAdapterLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:428932666862:function:cancellation-service-dev-cancellationFollowUpAdapter:50",
+        "CFStack": "cancellation-service-dev",
+        "ServerlessDeploymentBucketName": "cancellation-service-dev-serverlessdeploymentbuck-1fvoj94snwevy",
+        "CancellationFollowUpStepFunctionArn": "arn:aws:states:eu-central-1:428932666862:stateMachine:cancellationFollowUpStepFunction"
+      }
+    },
+    "rebooking-generator-service": {
+      "state": {
+        "detectedFrameworkVersion": "3.27.0"
+      },
+      "outputs": {
+        "RebookingDashgeneratorLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:428932666862:function:rebooking-generator-dev-rebooking-generator:35",
+        "ServerlessDeploymentBucketName": "rebooking-generator-dev-serverlessdeploymentbucke-gxyodu4r2tdp"
+      }
+    },
+    "fake-rozie-service": {
+      "state": {
+        "detectedFrameworkVersion": "3.27.0"
+      },
+      "outputs": {
+        "PersistRozieEventLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:428932666862:function:fake-rozie-service-dev-persistRozieEvent:11",
+        "ServerlessDeploymentBucketName": "fake-rozie-service-dev-serverlessdeploymentbucket-xb0f3smjzy7i"
+      }
+    },
+    "cancellation-generator-service": {
+      "state": {
+        "detectedFrameworkVersion": "3.27.0"
+      },
+      "outputs": {
+        "CancellationDashgeneratorLambdaFunctionQualifiedArn": "arn:aws:lambda:eu-central-1:428932666862:function:cancellation-generator-service-dev-cancellation-generator:56",
+        "ServerlessDeploymentBucketName": "cancellation-generator-s-serverlessdeploymentbuck-1xsx6zd5220kz"
+      }
+    }
+  }
+}

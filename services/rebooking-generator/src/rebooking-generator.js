@@ -80,9 +80,7 @@ module.exports.handler = async (event) => {
 
         const sqsparams = {
             MessageBody: JSON.stringify(rebooking),
-            QueueUrl: ROZIE_EVENTS_QUEUE_URL,
-            MessageGroupId: "flightrebooking",
-            MessageDeduplicationId: cancellation.passengerID
+            QueueUrl: ROZIE_EVENTS_QUEUE_URL
         }
         await sqs.sendMessage(sqsparams).promise()
     }
